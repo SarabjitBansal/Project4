@@ -1,0 +1,83 @@
+<%= form_with(model: user, local: true) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :user_email %>
+  </div>
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.text_field :password, id: :password %>
+  </div>
+  <div class="field">
+    <%= form.label :password_confirmation %>
+    <%= form.text_field :password_confirmation, id: :user_password_confirmation %>
+  </div>
+  <div class="field">
+    <%= form.label :image %>
+    <%= form.text_field :image, id: :user_image %>
+  </div>
+
+  <div class="field">
+     <%= f.label :image %><br>
+     <%= f.file_field :image %>
+     <% if f.object.image? %>
+       <%= image_tag f.object.image.thumb.url %>
+       <%= f.label :remove_image %>
+       <%= f.check_box :remove_image %>
+     <% end %>
+   </div>
+
+
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :user_name %>
+  </div>
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description, id: :user_description %>
+  </div>
+  <div class="field">
+    <%= form.label :keyskills %>
+    <%= form.text_field :keyskills, id: :user_keyskills %>
+  </div>
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location, id: :user_location %>
+  </div>
+  <div class="field">
+    <%= form.label :resumeu %>
+    <%= form.text_field :resumeu, id: :user_resumeu %>
+  </div>
+  <div class="field">
+    <%= form.label :githubu %>
+    <%= form.text_field :githubu, id: :user_githubu %>
+  </div>
+  <div class="field">
+    <%= form.label :linkedinu %>
+    <%= form.text_field :linkedinu, id: :user_linkedinu %>
+  </div>
+  <div class="field">
+    <%= form.label :insta %>
+    <%= form.text_field :insta, id: :user_insta %>
+  </div>
+  <div class="field">
+    <%= form.label :twitteru %>
+    <%= form.text_field :twitteru, id: :user_twitteru %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

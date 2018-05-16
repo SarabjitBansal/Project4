@@ -1,0 +1,40 @@
+
+header {
+
+}
+.Header {
+  padding:  1em;
+  /* text-align: left; */
+  display: inline-block;
+  width: 90%;
+  /* vertical-align: top; */
+  /* display: flex; */
+  /* background-color: #00bcd42b; */
+
+}
+.navTop {
+  padding-left: 20px;
+  padding-top: 20px;
+  color: black;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  float: left;
+  /* justify-content: space-between; */
+}
+.navTop2 {
+  padding-left: 20px;
+  color: black;
+  text-align: right;
+  text-decoration: none;
+  display: inline-block;
+  /* vertical-align: right; */
+  float: right;
+}
+.pickMe {
+  width: 5em;
+  height: 5em;
+  float: left;
+  /* top:0; */
+
+}
