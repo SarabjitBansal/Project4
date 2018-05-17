@@ -18,7 +18,7 @@ class Home extends Component {
 
   render() {
     // debugger;
-    console.log("hello",window.localStorage.jwtToken);
+    console.log("Token is here",window.localStorage.jwtToken);
     return (
       <header>
         <nav className="Header">

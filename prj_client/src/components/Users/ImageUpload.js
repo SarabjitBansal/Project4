@@ -1,8 +1,10 @@
+
 import React, { Component } from 'react';
 import axios from "axios";
 
 
 class ImageUpload extends Component {
+
   constructor(props) {
     super(props);
     this.state = {file: '',imagePreviewUrl: ''};
@@ -13,26 +15,39 @@ class ImageUpload extends Component {
     // TODO: do something with -> this.state.file
     console.log('handle uploading-', this.state.file);
     // save file to database with ajax connection
-    let files = this.state.file.name;
+    // debugger;
+    let files = this.refs.file.files[0]; //this.state.file; //.name
     let data = new FormData();
+    console.log("data",data);
     console.log("Filename",files);
-    this.setState({ onDrop: true });
     data.append("image", files);
+    console.log("data",data);
+    debugger;
 
-    const url = `http://localhost:3333/users/${this.props.user.id}.json`;
+
+    let url = `http://localhost:3333/users/${this.props.user.id}.json`;
+    console.log(url);
+      debugger;
     axios({
-      url,
+      url: url,
       method: "patch",
-      data: data,
-      config: { headers: { "Content-Type": "multipart/form-data" } }
-    }).then(res => {
-      console.log(res);
-      // if (res.status === 200) {
-      //   this.setState(prevState => ({
-      //     onDrop: !prevState.onDrop
-      //   }));
-      // }
-    });
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      data: data
+    })
+
+// code starts
+    // const url = `http://localhost:3333/users/${this.props.user.id}.json`;
+    // axios({
+    //   url,
+    //   method: "patch",
+    //   data: data,
+    //   config: { headers: { "Content-Type": "multipart/form-data" } }
+    // }).then(res => {
+    //   console.log(res);
+    //
+    // });
 
 
   // code ends
@@ -72,7 +87,7 @@ class ImageUpload extends Component {
     return (
       <div className="previewComponent">
           <input className="fileInput"
-            type="file"
+            type="file" ref="file"
             onChange={(e)=>this._handleImageChange(e)} />
           <button className="submitButton"
             type="submit"

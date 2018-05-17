@@ -1,0 +1,25 @@
+.Allprofiles img {
+  height: 80px;
+  width: 80px;
+
+}
+.Allprofilespage {
+
+  width: 100%;
+  display: inline-block;
+}
+
+.Allprofiles {
+  text-align: left;
+  padding: 50px;
+  width: 40%;
+  /* display: inline; */
+}
+
+.Allmaps {
+  width: 30%;
+  height: 60em;
+  border: 1px solid grey;
+  float: right;
+  text-align: top;
+}

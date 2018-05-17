@@ -19,13 +19,16 @@ const muiTheme = getMuiTheme({
   flatButton: { primaryTextColor: "#5C67E1" }
 });
 
+
 const token = localStorage.getItem('jwtToken');
+console.log("Token",token);
 
 const Routes =()=> (
   <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
   <Router>
   <div className = "container">
     <div className="routes">
+
       <Route exact path="/" component={ Home } />
       <Route exact path="/login" component={ Login}/>
       <Route exact path="/signup" component={ Signup }/>
@@ -34,7 +37,9 @@ const Routes =()=> (
 
       <Route exact path="/Profile" render={props => (
       token ? (
+
         <Profile {...props} token={token}/>
+
       ) : (
         <Redirect to="/login" />
       )

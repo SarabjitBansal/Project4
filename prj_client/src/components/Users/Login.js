@@ -6,6 +6,8 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +19,10 @@ class Login extends Component {
   }
 
   handleClick = () => {
+
+    console.log(this.state.email);
+    console.log(this.state.password);
+
     let url = "http://localhost:3333/user_token";
     let postData = {
           auth: {
@@ -34,6 +40,7 @@ class Login extends Component {
 
     axios.post(url, postData, axiosConfig)
       .then((res) => {
+        debugger;
         console.log("RESPONSE RECEIVED: ", res);
         let token = res.data.jwt;
         localStorage.setItem('jwtToken', token);
