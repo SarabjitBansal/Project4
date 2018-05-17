@@ -12,9 +12,11 @@
 
 
 <p>
-  <strong>Image:</strong>
-  <%= image_tag @user.image.thumb.url %>
+  <% if @user.image.present? %>
+   <%= image_tag @user.image, :alt => @user.name, :id => 'profile-image'%>
+ <% end %>
 </p>
+
 
 
 

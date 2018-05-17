@@ -28,6 +28,13 @@ class UsersController < ApiController
 
     respond_to do |format|
       if @user.save
+
+      if @user.image?
+        # @cloudinary = Cloudinary::Uploader.upload(params[:user][:image])
+        @cloudinary = Cloudinary::Uploader.upload(params[:image])
+        @user.update :image => @cloudinary['url']
+      end
+
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -41,7 +48,12 @@ class UsersController < ApiController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
+
       if @user.update(user_params)
+        if params[:image].present?
+          @cloudinary = Cloudinary::Uploader.upload(params[:image])
+          @user.update :image => @cloudinary['url']
+        end
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -73,5 +85,7 @@ class UsersController < ApiController
 
       params.permit(:email, :password, :password_confirmation, :image, :name, :description,:keyskills,:location,
       :latitude,:longitude,:resumeu,:githubu,:linkedinu,:insta,:twitteru)
+      # params.require(:user).permit(:email, :password, :password_confirmation, :image, :name, :description,:keyskills,:location,
+      # :latitude,:longitude,:resumeu,:githubu,:linkedinu,:insta,:twitteru)
     end
 end
