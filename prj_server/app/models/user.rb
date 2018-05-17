@@ -20,4 +20,7 @@ class User < ApplicationRecord
       email: email
     }
   end
+  geocoded_by :location
+  after_validation :geocode
+
 end

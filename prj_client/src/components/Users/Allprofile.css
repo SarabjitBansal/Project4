@@ -13,6 +13,8 @@
   text-align: left;
   padding: 50px;
   width: 40%;
+  vertical-align: top;
+  display: inline-block;
   /* display: inline; */
 }
 
@@ -20,6 +22,6 @@
   width: 30%;
   height: 60em;
   border: 1px solid grey;
-  float: right;
-  text-align: top;
+
+  display: inline-block;
 }
