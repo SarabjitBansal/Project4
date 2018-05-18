@@ -7,6 +7,11 @@ class UsersController < ApiController
     @users = User.all
   end
 
+  def search
+    @users = User.near(params[:loc],20)
+    render :json => @users
+  end
+
   # GET /users/1
   # GET /users/1.json
   def show

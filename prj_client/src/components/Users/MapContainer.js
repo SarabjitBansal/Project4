@@ -30,9 +30,17 @@ export class MapContainer extends PureComponent {
   }
 
   fetchuser() {
-
+    let url1= 'http://localhost:3333/users.json';
+    if(this.props.locsearch) {
+      // debugger;
+        let k = this.props.locsearch
+       url1= `http://localhost:3333/users/search/${k}.json`;
+    }
+    else {
+       url1= 'http://localhost:3333/users.json';
+      }
     axios
-        .get("http://localhost:3333/users.json", {
+        .get(url1, {
         })
         .then(res => {
           // console.log("RESULT IS ", res);
@@ -41,18 +49,18 @@ export class MapContainer extends PureComponent {
           // console.log('RESULT DATA',this.state.resultdata1);
 
           //// location serach starts
-          console.log("Props",this.props.locsearch);
-          if(this.props.locsearch) {
-            console.log('Yes there are props');
-            let arr = res.data;
-            let newresult=[];
-            for (let i = 0; i < arr.length; i++) {
-              if (arr[i].location === this.props.locsearch ){
-                  newresult.push(arr[i]);
-              }
-            }
-            this.setState( { resultdata1: newresult } )
-          }
+          // console.log("Props",this.props.locsearch);
+          // if(this.props.locsearch) {
+          //   console.log('Yes there are props');
+          //   let arr = res.data;
+          //   let newresult=[];
+          //   for (let i = 0; i < arr.length; i++) {
+          //     if (arr[i].location === this.props.locsearch ){
+          //         newresult.push(arr[i]);
+          //     }
+          //   }
+          //   this.setState( { resultdata1: newresult } )
+          // }
 
           // loc serach ends
 
@@ -80,7 +88,7 @@ export class MapContainer extends PureComponent {
          }}
         className={'map'}
          onReady={this.fetchuser}
-         style={{width: '100%', height: '100vh', position: 'fixed'}}
+         style={{width: '100%', height: '80vh', position: 'fixed'}}
          >
 
          {markers()}

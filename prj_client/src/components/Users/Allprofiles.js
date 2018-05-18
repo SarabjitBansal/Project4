@@ -31,8 +31,9 @@ class Allprofiles extends PureComponent {
   _handleClick(e){
     console.log('clicked');
   }
+  // have to put await otherwise it was showing blank page
   componentDidMount = async () => {
-    this.fetchUsers();
+    await this.fetchUsers();
   };
   // for the search functionality
   _handleChangeloc(event) {
@@ -45,24 +46,34 @@ class Allprofiles extends PureComponent {
   }
 // serch functonality ends
   fetchUsers = () => {
+    let url1= 'http://localhost:3333/users.json';
+    if(this.state.locsearch) {
+      debugger;
+        let k = this.state.locsearch
+       url1= `http://localhost:3333/users/search/${k}.json`;
+    }
+    else {
+       url1= 'http://localhost:3333/users.json';
+      }
+
 
     axios({
-      url: `http://localhost:3333/users.json`,
+      url: url1,
       method: "get",
       headers: {
         authorization: `Bearer ${this.props.token}`
       }
     }).then(res => {this.setState({ allusers: res.data })
-    if(this.state.locsearch) {
-      let arr = res.data;
-      let newresult=[];
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i].location === this.state.locsearch ){
-            newresult.push(arr[i]);
-        }
-      }
-      this.setState( { allusers: newresult } )
-    }
+    // if(this.state.locsearch) {
+    //   let arr = res.data;
+    //   let newresult=[];
+    //   for (let i = 0; i < arr.length; i++) {
+    //     if (arr[i].location === this.state.locsearch ){
+    //         newresult.push(arr[i]);
+    //     }
+    //   }
+    //   this.setState( { allusers: newresult } )
+    // }
   }
 
 
@@ -126,7 +137,7 @@ class Allprofiles extends PureComponent {
                  primary={true}
                  onClick={this._handleClickloc}
                />
-               <MapContainer locsearch={this.state.locsearch}/>
+               <MapContainer locsearch ={this.state.locsearch}/>
             </div>
 
           </div>
