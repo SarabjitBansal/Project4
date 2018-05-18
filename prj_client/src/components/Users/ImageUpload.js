@@ -79,7 +79,7 @@ class ImageUpload extends Component {
     // }
 
     if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl} />);
+      $imagePreview = (<img src={imagePreviewUrl} alt={Image} />);
     } else {
       $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
     }

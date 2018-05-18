@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import Signup from "../Users/Signup";
-import Login from "../Users/Login";
-import Homepage from "../Homepage/Homepage";
-import Profile from "../Users/Profile";
-import Allprofile from "../Users/Allprofiles";
-import Jobs from "../Jobs/Jobs";
+// import Signup from "../Users/Signup";
+// import Login from "../Users/Login";
+// import Homepage from "../Homepage/Homepage";
+// import Profile from "../Users/Profile";
+// import Allprofile from "../Users/Allprofiles";
+// import Jobs from "../Jobs/Jobs";
 import imgIcon from '../images/pickme.png'
 import './Header.css';
 // <Link to = '/Login' className="headerLink">LogIn</Link>

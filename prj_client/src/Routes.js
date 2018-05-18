@@ -8,7 +8,7 @@ import Home from './components/Home';
 import Homepage from './components/Homepage/Homepage';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 // import Search from './components/newuser';
 
@@ -29,7 +29,7 @@ const Routes =()=> (
   <div className = "container">
     <div className="routes">
 
-      <Route exact path="/" component={ Home } />
+      <Route exact path="/" component={ Homepage } />
       <Route exact path="/login" component={ Login}/>
       <Route exact path="/signup" component={ Signup }/>
       <Route exact path="/homepage" component={ Homepage }/>

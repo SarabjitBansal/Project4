@@ -1,11 +1,12 @@
 
 import React, { PureComponent } from 'react';
-import { Link } from "react-router-dom";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+// import { Link } from "react-router-dom";
+// import Header from "../Header/Header";
+// import Footer from "../Footer/Footer";
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
+
+// import TextField from "material-ui/TextField";
+// import RaisedButton from "material-ui/RaisedButton";
 import axios from "axios";
 import './Allprofile.css';
 
@@ -14,12 +15,14 @@ export class MapContainer extends PureComponent {
   constructor(props) {
       super(props);
       this.state = {
-      resultdata1:[]
+      resultdata1:[],
+      isOpen: false
     };
-      let k = props.locsearch;
-      console.log("K is ",k);
+      // let k = props.locsearch;
+      // console.log("K is ",k);
       this.fetchuser = this.fetchuser.bind(this);
-
+      this.handleToggleOpen = this.handleToggleOpen.bind(this);
+      this.handleToggleClose = this.handleToggleClose.bind(this);
     }
 
   componentDidMount() {
@@ -28,7 +31,18 @@ export class MapContainer extends PureComponent {
   componentWillReceiveProps(){
     this.fetchuser()
   }
+  handleToggleOpen = () => {
+    console.log('In Open Func');
+  	this.setState({
+  		isOpen: true
+  	});
+  }
 
+  handleToggleClose = () => {
+  	this.setState({
+  		isOpen: false
+  	});
+  }
   fetchuser() {
     let url1= 'http://localhost:3333/users.json';
     if(this.props.locsearch) {
@@ -68,13 +82,29 @@ export class MapContainer extends PureComponent {
 
   }
 
+// new functonality
+
 
     render() {
+    //   { true && (
+    //     <InfoWindow position={{lat: loc.latitude, lng: loc.longitude}} visible={true} onCloseClick={() => this.handleToggleClose()}>
+    //       <div>{loc.keyskills}</div>
+    //     </InfoWindow>
+    //   )
+    //
+    // }
 
       const markers = () => {
         return (
           this.state.resultdata1.map( (loc) =>
-            <Marker position={{ lat: loc.latitude , lng: loc.longitude }} />
+              <Marker key ={loc.id} position={{ lat: loc.latitude , lng: loc.longitude }}
+                // label={loc.keyskills}
+                onClick={() => this.handleToggleOpen()}
+               >
+
+
+
+             </Marker>
           )
         )
       }
@@ -82,17 +112,16 @@ export class MapContainer extends PureComponent {
       return (
 
         <Map google={this.props.google}
-        initialCenter={{
-             lat: -33.8688197,
-             lng: 151.20929550000005
+        center={{
+             lat:this.props.lat,
+             lng: this.props.lng
          }}
         className={'map'}
          onReady={this.fetchuser}
          style={{width: '100%', height: '80vh', position: 'fixed'}}
          >
 
-         {markers()}
-
+          {markers()}
 
 
         </Map>
