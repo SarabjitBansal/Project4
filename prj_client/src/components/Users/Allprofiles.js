@@ -6,6 +6,8 @@ import MapContainer from "./MapContainer";
 import axios from "axios";
 import jwtDecoder from "jwt-decode";
 import RaisedButton from "material-ui/RaisedButton";
+import TextField from "material-ui/TextField";
+
 
 import './Allprofile.css';
 
@@ -17,17 +19,31 @@ class Allprofiles extends PureComponent {
   this.state = {
     allusers: null,
     height: 20,
-    width:20 }
+    width:20,
+    locsearch:''
+
+      }
     this._handleClick = this._handleClick.bind(this);
+    this._handleChangeloc = this._handleChangeloc.bind(this);
+    this._handleClickloc = this._handleClickloc.bind(this);
   };
 
   _handleClick(e){
     console.log('clicked');
   }
   componentDidMount = async () => {
-    await this.fetchUsers();
+    this.fetchUsers();
   };
-
+  // for the search functionality
+  _handleChangeloc(event) {
+      this.setState({
+        locsearch: event.target.value
+      });
+    }
+  _handleClickloc() {
+   this.fetchUsers()
+  }
+// serch functonality ends
   fetchUsers = () => {
 
     axios({
@@ -36,7 +52,33 @@ class Allprofiles extends PureComponent {
       headers: {
         authorization: `Bearer ${this.props.token}`
       }
-    }).then(res => this.setState({ allusers: res.data }));
+    }).then(res => {this.setState({ allusers: res.data })
+    if(this.state.locsearch) {
+      let arr = res.data;
+      let newresult=[];
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].location === this.state.locsearch ){
+            newresult.push(arr[i]);
+        }
+      }
+      this.setState( { allusers: newresult } )
+    }
+  }
+
+
+  ).then((res)=> {
+      // console.log('im new res');
+      // console.log('Im am res ',res);
+      // console.log('res data new',res.data);
+      // for seacrh functionality
+
+
+
+  /// serch functionality ends
+    }
+    );
+
+
   };
 
   render() {
@@ -44,7 +86,7 @@ class Allprofiles extends PureComponent {
       return null;
     }
     const allusers = this.state.allusers;
-    console.log("All users",allusers);
+    // console.log("All users",allusers);
     return (
       <div className="AllprofilesTop">
         <Header />
@@ -71,7 +113,22 @@ class Allprofiles extends PureComponent {
           )}
           </div>
           <div className = "Allmaps">
-            <MapContainer />
+            <div>
+            <TextField
+               id="userloc-field"
+               type="location"
+               hintText="location"
+               onChange={this._handleChangeloc}
+               floatingLabelText="Location"/>
+
+               <RaisedButton
+                 label="Search"
+                 primary={true}
+                 onClick={this._handleClickloc}
+               />
+               <MapContainer locsearch={this.state.locsearch}/>
+            </div>
+
           </div>
         </div>
 

@@ -17,10 +17,14 @@
   display: inline-block;
   /* display: inline; */
 }
-
+.map {
+  /* width: 30%; */
+  /* width: 100%; */
+}
 .Allmaps {
-  width: 30%;
-  height: 60em;
+  width: 50%;
+  position: relative;
+  height: 100vh;
   border: 1px solid grey;
 
   display: inline-block;
