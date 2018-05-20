@@ -1,16 +1,22 @@
 import React, { PureComponent } from 'react';
 import { Link } from "react-router-dom";
-import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MapContainer from "./MapContainer";
 import axios from "axios";
 // import jwtDecoder from "jwt-decode";
 import RaisedButton from "material-ui/RaisedButton";
+
 import TextField from "material-ui/TextField";
 import Geocode from "react-geocode";
-import { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete'
-import PlacesAutocomplete from 'react-places-autocomplete'
+// import { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete'
+// import PlacesAutocomplete from 'react-places-autocomplete'
+
+import PlacesAutocomplete, { geocodeByAddress,geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+
+
 // npm install --save react-places-autocomplete
+
 
 import './Allprofile.css';
 
@@ -26,21 +32,45 @@ class Allprofiles extends PureComponent {
     lat: -33.8688197,
     lng:151.20929550000005
       }
-    this._handleClick = this._handleClick.bind(this);
     this._handleChangeloc = this._handleChangeloc.bind(this);
     this._handleClickloc = this._handleClickloc.bind(this);
+    this._handleClick = this._handleClick.bind(this);
   };
 
-  _handleClick(e){
-    console.log('clicked');
-  }
+
   // have to put await otherwise it was showing blank page
   componentDidMount = async () => {
     await this.fetchUsers();
   };
+
+  _handleClick = u => {
+  const user = {
+    pathname: `/userdetails/${u.id}`,
+    state: u
+  };
+  this.props.history.push(user);
+};
+  _handleClick2 = u => {
+  const user = {
+    pathname: `/chat`,
+    state: u
+  };
+  this.props.history.push(user);
+};
+
+// _handleClick2 = () => {
+//   const location = {
+//     pathname: `/chat`,
+//     state: this.state.locsearch
+//   };
+//
+//   this.props.history.push(location);
+// };
+
+
   // for the search functionality
   _handleChangeloc(event) {
-    
+
 
       this.setState({
         locsearch: event.target.value
@@ -89,6 +119,7 @@ class Allprofiles extends PureComponent {
         authorization: `Bearer ${this.props.token}`
       }
     }).then(res => {this.setState({ allusers: res.data })
+    console.log('result data is ', res.data);
     // if(this.state.locsearch) {
     //   let arr = res.data;
     //   let newresult=[];
@@ -117,6 +148,13 @@ class Allprofiles extends PureComponent {
 
   };
 
+/// new code
+
+
+
+/// code endss
+
+
   render() {
     if(!this.state.allusers){
       return null;
@@ -125,43 +163,60 @@ class Allprofiles extends PureComponent {
     // console.log("All users",allusers);
     return (
       <div className="AllprofilesTop">
-        <Header />
-        All Profiles
+
+
+
 
         <div className="Allprofilespage">
-          <div className = "Allprofiles">
-          { this.state.allusers.map( user =>
-            <div key={user.id}>
 
+          <div className = "Allprofiles">
+          <div className="searchInfo">
+          <TextField
+             id="userloc-field"
+             className="searchText"
+             type="location"
+             hintText="Sydney"
+             onChange={this._handleChangeloc}
+             floatingLabelText="Location"/>
+
+             <RaisedButton
+              className="searchLoc"
+               label="Search"
+               primary={true}
+               onClick={this._handleClickloc}
+             />
+          </div>
+          <br />
+
+          { this.state.allusers.map( user =>
+
+            <div key={user.id}>
             <img src={ user.image } alt={ user.name } height={ this.state.height }  width={ this.state.width }/>
 
-            <p>{user.name}</p>
-            <p>{user.description}</p>
-            <p>{user.keyskills}</p>
+            <p><strong>{user.name}</strong></p>
+
+              <p className="block-with-text" ><strong>About:</strong> {user.description}</p>
+
+            <p><strong>Key skills:</strong> {user.keyskills}</p>
+
             <br />
-            <RaisedButton
-              label="Details"
-              primary={true}
-              onClick={this._handleClick}
-            />
+
+
+            {<a onClick = {() => this._handleClick(user)} value ={user} href={`/userdetails/${user.id}`} ><RaisedButton primary={true} className="work" label ="My Work"></RaisedButton></a>}
+            {<a onClick = {() => this._handleClick2(user)} value ={user} href={`/chat`} ><RaisedButton primary={true} className="chat" label="Chat"></RaisedButton></a>}
+              <br />
+                <br />
             <hr />
+            <br />
+
             </div>
           )}
           </div>
           <div className = "Allmaps">
             <div>
-            <TextField
-               id="userloc-field"
-               type="location"
-               hintText="location"
-               onChange={this._handleChangeloc}
-               floatingLabelText="Location"/>
 
-               <RaisedButton
-                 label="Search"
-                 primary={true}
-                 onClick={this._handleClickloc}
-               />
+
+
                <MapContainer locsearch ={this.state.locsearch}
                lat= {this.state.lat}
                lng={this.state.lng}/>
@@ -170,12 +225,78 @@ class Allprofiles extends PureComponent {
           </div>
         </div>
 
-      <Link to="/">
-      Back to Home
-      </Link>
      <Footer />
       </div>
     );
   }
 }
+
+// new modeule
+
+// class LocationSearchInput extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = { address: '' }
+//   }
+//
+//   handleChange = (address) => {
+//     this.setState({ address })
+//   }
+//
+//   handleSelect = (address) => {
+//     geocodeByAddress(address)
+//       .then(results => getLatLng(results[0]))
+//       .then(latLng => console.log('Success', latLng))
+//       .catch(error => console.error('Error', error))
+//   }
+//
+//   render() {
+//     return (
+//       <PlacesAutocomplete
+//         value={this.state.address}
+//         onChange={this.handleChange}
+//         onSelect={this.handleSelect}
+//       >
+//         {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+//           <div>
+//             <TextField
+//               {...getInputProps({
+//                 placeholder: 'Search Places ...',
+//                 className: 'location-search-input'
+//               })}
+//             />
+//             <RaisedButton
+//               label="Search"
+//               primary={true}
+//               onClick={this._handleClickloc}
+//             />
+//
+//             <div className="autocomplete-dropdown-container">
+//               {suggestions.map(suggestion => {
+//                 const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
+//                 // inline style for demonstration purpose
+//                 const style = suggestion.active
+//                             ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+//                             : { backgroundColor: '#ffffff', cursor: 'pointer' };
+//                 return (
+//                   <div {...getSuggestionItemProps(suggestion, { className, style })}>
+//                     <span>{suggestion.description}</span>
+//                   </div>
+//                 )
+//               })}
+//             </div>
+//           </div>
+//         )}
+//       </PlacesAutocomplete>
+//     );
+//   }
+// }
+
+// new module ends
+
 export default Allprofiles;
+
+
+// export default GoogleApiWrapper({
+//   apiKey: 'AIzaSyC5aeRg0RBV99YfltTMDZPvO8h9lg_E8p0'
+// })(Allprofiles)

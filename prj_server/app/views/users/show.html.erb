@@ -15,10 +15,16 @@
   <% if @user.image.present? %>
    <%= image_tag @user.image, :alt => @user.name, :id => 'profile-image'%>
  <% end %>
+
 </p>
 
 
+<% if @user.resumeu.present? %>
 
+<iframe src=<%= @user.resumeu %> width="200" height="200" style="border: none;"> </iframe>
+
+ <!-- <%= image_tag @user.resumeu, :alt => @user.name, :id => 'profile-resumeu'%> -->
+<% end %>
 
 
 

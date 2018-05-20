@@ -34,10 +34,14 @@ class UsersController < ApiController
     respond_to do |format|
       if @user.save
 
-      if @user.image?
+    if params[:image].present?
         # @cloudinary = Cloudinary::Uploader.upload(params[:user][:image])
         @cloudinary = Cloudinary::Uploader.upload(params[:image])
         @user.update :image => @cloudinary['url']
+      end
+      if params[:resumeu].present?
+        @cloudinary = Cloudinary::Uploader.upload(params[:resumeu])
+        @user.update :resumeu => @cloudinary['url']
       end
 
         format.html { redirect_to @user, notice: 'User was successfully created.' }
@@ -58,6 +62,10 @@ class UsersController < ApiController
         if params[:image].present?
           @cloudinary = Cloudinary::Uploader.upload(params[:image])
           @user.update :image => @cloudinary['url']
+        end
+        if params[:resumeu].present?
+          @cloudinary = Cloudinary::Uploader.upload(params[:resumeu])
+          @user.update :resumeu => @cloudinary['url']
         end
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }

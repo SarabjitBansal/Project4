@@ -1,14 +1,16 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Signup from "./components/Users/Signup";
 import Login from "./components/Users/Login";
 import Editprofile from "./components/Users/Editprofile";
 import Allprofiles from "./components/Users/Allprofiles";
 import Profile from "./components/Users/Profile";
-import Home from './components/Home';
-import Homepage from './components/Homepage/Homepage';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import Home from './components/Homepage/Home';
+import Nav from "./components/Header/Header";
+import Userdetails from "./components/Users/Userdetails";
+import App from "./components/App";
 
 // import Search from './components/newuser';
 
@@ -16,47 +18,60 @@ const muiTheme = getMuiTheme({
   datePicker: {
     selectColor: "#5C67E1"
   },
-  flatButton: { primaryTextColor: "#5C67E1" }
+  raisedButton: { backgroundColor:"#ccc",primaryTextColor: "#fff" },
+  textField:{primaryTextColor: "#fff" }
 });
 
 
 const token = localStorage.getItem('jwtToken');
-console.log("Token",token);
 
+console.log("Token is at Routes",token);
+debugger;
 const Routes =()=> (
+
   <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
+
   <Router>
-  <div className = "container">
-    <div className="routes">
-
-      <Route exact path="/" component={ Homepage } />
-      <Route exact path="/login" component={ Login}/>
-      <Route exact path="/signup" component={ Signup }/>
-      <Route exact path="/homepage" component={ Homepage }/>
+  <React.Fragment>
+  <Nav />
+  <Switch>
+      <Route exact path="/" component={ Home } />
+      <Route exact path="/allprofiles" component={ Allprofiles }/>
 
 
-      <Route exact path="/Profile" render={props => (
-      token ? (
 
-        <Profile {...props} token={token}/>
+      <Route exact path="/profile" render={props => (
+      token ? (<Profile {...props} token={token}/>
 
       ) : (
         <Redirect to="/login" />
       )
     )} />
-    <Route exact path="/Editprofile" render={props => (
+
+    <Route exact path="/editprofile" render={props => (
       token ? (
         <Editprofile {...props} token={token}/>
       ) : (
         <Redirect to="/login" />
       )
     )} />
+    <Route exact path="/login" component={ Login}/>
+    <Route exact path="/signup" component={ Signup }/>
+    <Route exact path="/userdetails/:id" component={ Userdetails }/>
 
-    <Route exact path="/allprofiles" component={ Allprofiles }/>
-    </div>
-  </div>
+    <Route exact path="/chat" render={props => (
+      token ? (
+        <App {...props} token={token}/>
+      ) : (
+        <Redirect to="/login" />
+      )
+    )} />
 
-  </Router>
+
+  </Switch>
+</React.Fragment>
+</Router>
+
   </MuiThemeProvider>
 );
 

@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 // import Signup from "../Users/Signup";
 // import Login from "../Users/Login";
 // import Homepage from "../Homepage/Homepage";
-// import Profile from "../Users/Profile";
+// import Editprofile from "../Users/Profile";
 // import Allprofile from "../Users/Allprofiles";
 // import Jobs from "../Jobs/Jobs";
-import imgIcon from '../images/pickme.png'
+import imgIcon from '../images/Logo.png'
 import './Header.css';
 // <Link to = '/Login' className="headerLink">LogIn</Link>
 
@@ -18,33 +18,39 @@ class Home extends Component {
 
   render() {
     // debugger;
-    console.log("Token is here",window.localStorage.jwtToken);
+    // debugger;
+    console.log("Token is Header",window.localStorage.jwtToken);
+    // debugger;
     return (
       <header>
-        <nav className="Header">
-        <img src = {imgIcon} alt= "Logo" className="pickMe"/>
+        <nav className="navbar">
 
-          <Link to = "/homepage" className ="navTop">Homepage</Link>
-          <Link to = '/allprofiles' className="navTop">Profiles</Link>
+
+          <img src = {imgIcon} alt= "Logo" className="pickMe"/>
+
+          <Link to = "/" className ="navBarTop">Home</Link>
+          <Link to = '/allprofiles' className="navBarTop">Profiles</Link>
 
           { window.localStorage.jwtToken ? (
-            <div>
-              <Link to = '/editprofile' className="navTop">My Profile</Link>
+            <div className="LoginDet">
+              <Link to = "/profile">My Profile</Link>
               <Link to="/">
-                <button className= "signOutBtn" onClick={this._signOut}>Sign out</button>
+                <a className = "signOutBtn" onClick={this._signOut}>Sign out</a>
               </Link>
             </div>
               ):(
-                <div>
-                  <Link to="/signup" className= "navTop2">Sign Up</Link>
-                  <Link to="/login" className= "navTop2">Login</Link>
-                </div>
+              <div className="LoginDet">
+                <Link to="/signup">Sign Up</Link>
+                <Link to="/login">Login</Link>
+              </div>
             )}
 
         </nav>
       </header>
     );
+
   }
+
 }
 
 export default Home;

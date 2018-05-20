@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 // import { Link } from "react-router-dom";
-import Header from "../Header/Header";
+// import Header1 from "../Header/Header";
 import Footer from "../Footer/Footer";
 import './Homepage.css';
-class Homepage extends Component {
+class Home extends Component {
   render() {
     return (
+
       <div className="About">
-        <Header />
+
         <div>
           <p>
           Fed up of putting everything into a job application, getting your hopes up and never hearing anything back?
@@ -21,4 +22,4 @@ class Homepage extends Component {
   }
 }
 
-export default Homepage;
+export default Home;

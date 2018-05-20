@@ -98,7 +98,7 @@ export class MapContainer extends PureComponent {
         return (
           this.state.resultdata1.map( (loc) =>
               <Marker key ={loc.id} position={{ lat: loc.latitude , lng: loc.longitude }}
-                // label={loc.keyskills}
+                label={loc.name}
                 onClick={() => this.handleToggleOpen()}
                >
 
@@ -118,7 +118,6 @@ export class MapContainer extends PureComponent {
          }}
         className={'map'}
          onReady={this.fetchuser}
-         style={{width: '100%', height: '80vh', position: 'fixed'}}
          >
 
           {markers()}

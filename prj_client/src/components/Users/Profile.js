@@ -1,24 +1,25 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+import React, { Component } from "react";
 import axios from "axios";
 import jwtDecoder from "jwt-decode";
-import './Editprofile.css';
+import { Link } from "react-router-dom";
+import Footer from "../Footer/Footer";
+import RaisedButton from "material-ui/RaisedButton";
+
 
 class Profile extends Component {
+  debugger;
   constructor(props) {
-  super(props);
-  this.state = {
-    user: null
+    super(props);
+    this.state = {
+      user: null
+    };
+  }
+
+  componentDidMount = async () => {
+    await this.fetchUser();
   };
-}
-componentDidMount = async () => {
-  await this.fetchUser();
-};
 
-
-fetchUser = () => {
+  fetchUser = () => {
     // Fat arrow functions do not break the connection to this
 
     const user = jwtDecoder(this.props.token);
@@ -31,21 +32,44 @@ fetchUser = () => {
       }
     })
       .then(res => this.setState({ user: res.data }))
+
   };
 
   render() {
     if (!this.state.user) {
-    return null;
-  }
+      return null;
+    }
     return (
-      <div className="Profile">
-        <Header />
-        My profile page
-          <Link to="/Editprofile">Edit Profile</Link>
+      <div className="profile" key={this.state.user.id}>
 
-        <Footer />
+      <p>{this.state.user.name}</p>
+      <p>{this.state.user.description}</p>
+      <p>{this.state.user.keyskills}</p>
+      <p>{this.state.user.location}</p>
+      <br />
+
+      <div className ="socialMedia">
+      <div><a  href={ `${this.state.user.linkedinu}` }  target="_blank" className="fa fa-linkedin"><p>{this.state.user.linkedinu}</p></a></div>
+      <div><a  href={ `${this.state.user.twitteru}` }  target="_blank" className="fa fa fa-twitter"><p>{this.state.user.linkedinu}</p></a></div>
+      <div><a  href={ `${this.state.user.instau}` }  target="_blank" className="fa fa fa-instagram"><p>{this.state.user.linkedinu}</p></a></div>
+      <div><a  href={ `${this.state.user.githubu}` }  target="_blank" className="fa fa fa-github"><p>{this.state.user.linkedinu}</p></a></div>
+      <div><a  href={ `${this.state.user.resumeu}` }  target="_blank" className="fa fa fa-paperclip"><p>{this.state.user.linkedinu}</p></a></div>
+      </div>
+      <br />
+
+
+
+
+
+      <Link to="/editprofile">
+      <RaisedButton primary={true}>Edit Profile</RaisedButton>
+      </Link>
+      <br/><br/>
+
+       <Footer />
       </div>
     );
   }
 }
+
 export default Profile;

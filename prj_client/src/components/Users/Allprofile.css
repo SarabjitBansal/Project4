@@ -1,3 +1,5 @@
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Open+Sans');
 .Allprofiles img {
   height: 80px;
   width: 80px;
@@ -8,24 +10,137 @@
   width: 100%;
   display: inline-block;
 }
+.Allprofilespage  p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+.Profiles {
+  margin-top: 50px;
+  width: 100%;
+  display: inline-block;
+}
+.userDetails {
+  width: 50%;
+  display: inline-block;
+  text-align: left;
+  vertical-align: top;
+}
+.socialMedia {
+  width:30%;
+  display: inline-block;
+  display: flex;
+  justify-content: space-between;
 
+}
+.socialMedia a {
+  font-size: 22px;
+  text-decoration: none;
+
+  color:#5aa8b4;
+}
+.socialMedia a:hover {
+  color:#dc442d;
+}
+.gitDetails {
+  width: 40%;
+  display:inline-block;
+
+}
+.repos ul a {
+  text-decoration: none;
+  color:#5aa8b4;
+}
+.repos ul a:hover {
+color:#dc442d;
+}
+
+
+.repos ul  {
+  text-decoration: none;
+  list-style: none;
+
+}
+.Profiles p{
+  font-size: 16px;
+}
 .Allprofiles {
   text-align: left;
   padding: 50px;
-  width: 40%;
+  width: 50%;
   vertical-align: top;
   display: inline-block;
   /* display: inline; */
+}
+.searchInfo {
+  /* border: 1px solid grey;
+  padding: 0; */
+}
+.searchText {
+  margin-right: 20px;
 }
 .map {
   /* width: 30%; */
   /* width: 100%; */
 }
+.AllprofilesTop {
+    position: relative;
+    width:100%;
+    text-align: left;
+}
 .Allmaps {
-  width: 50%;
-  position: relative;
-  height: 100vh;
-  border: 1px solid grey;
-
+  text-align: center;
+  width: 40%;
+  position: fixed;
+  height: 80vh;
+  right: 0;
+  margin-right: 20px;
   display: inline-block;
+}
+#userloc-field {
+
+}
+
+/* styles for '...' */
+.block-with-text {
+  /* hide text if it more than N lines  */
+  overflow: hidden;
+  /* for set '...' in absolute position */
+  position: relative;
+  /* use this value to count block height */
+  line-height: 1.2em;
+  /* max-height = line-height (1.2) * lines max number (3) */
+  max-height: 3.6em;
+  /* fix problem when last visible word doesn't adjoin right side  */
+  text-align: justify;
+  /* place for '...' */
+  margin-right: -1em;
+  padding-right: 1em;
+}
+/* create the ... */
+.block-with-text:before {
+  /* points in the end */
+  content: '...';
+  /* absolute position */
+  position: absolute;
+  /* set position to right bottom corner of block */
+  right: 0;
+  bottom: 0;
+}
+/* hide ... if we have text, which is less than or equal to max lines */
+.block-with-text:after {
+  /* points in the end */
+  content: '';
+  /* absolute position */
+  position: absolute;
+  /* set position to right bottom corner of text */
+  right: 0;
+  /* set width and height */
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  /* bg color = bg color under block */
+  background: white;
+}
+.work {
+  margin-right: 10px;
 }

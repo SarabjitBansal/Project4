@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import ImageUpload from "./ImageUpload";
+import ResumeUpload from "./ResumeUpload";
 import jwtDecoder from "jwt-decode";
 import TextField from "material-ui/TextField";
 import axios from "axios";
@@ -35,12 +35,16 @@ class Editprofile extends Component {
     this._handleSubmit =this._handleSubmit.bind(this);
     this._handleChange = this._handleChange.bind(this);
   }
+  componentDidMount = async () => {
+      console.log(this.props)
+    await this.fetchUser();
+    };
   _handleSubmit(event) {
     event.preventDefault();
         const user = jwtDecoder(this.props.token);
 
         let url = `http://localhost:3333/users/${user.sub}.json`;
-        console.log(url);
+        console.log("This url with user .sub is ",url);
           debugger;
         axios({
           url: url,
@@ -63,7 +67,7 @@ class Editprofile extends Component {
             twitteru:this.state.twitteru
           }
         }).then(res =>
-          this.setState({ success: "Success your account was updated!" })
+          this.setState({ user: res.data })
         );
   };
   _handleChange(event) {
@@ -126,14 +130,13 @@ class Editprofile extends Component {
       });
     }
   }
-  componentDidMount = () => {
-      console.log(this.props)
-      this.fetchUser();
-    };
+
+
+
 
     fetchUser = () => {
       const user = jwtDecoder(this.props.token);
-      console.log(user);
+      console.log("user inn Edit profile",user);
       axios({
         url: `http://localhost:3333/users/${user.sub}.json`,
         method: "get",
@@ -156,12 +159,13 @@ class Editprofile extends Component {
     };
 
   render() {
+    debugger;
     if (!this.state.user) {
       return null;
     }
     return (
       <div className="Editprofile">
-        <Header />
+
         <form onSubmit={this._handleSubmit}>
           <div>
               <h1>Edit Profile</h1>
@@ -201,6 +205,9 @@ class Editprofile extends Component {
             type="description"
             hintText="description"
             floatingLabelText="description"
+            multiLine={true}
+            rows={2}
+            rowsMax={4}
             defaultValue={this.state.user.description}
             onChange={this._handleChange}
           />
@@ -213,15 +220,12 @@ class Editprofile extends Component {
             defaultValue={this.state.user.keyskills}
             onChange={this._handleChange}
           />
+
+
           <br />
-          <TextField
-            id="resumeu-field"
-            type="resumeu"
-            hintText="resumeu"
-            floatingLabelText="resumeu"
-            defaultValue={this.state.user.resumeu}
-            onChange={this._handleChange}
-          />
+          <ResumeUpload user={this.state.user}/>
+          <br />
+
           <br />
           <TextField
             id="githubu-field"
@@ -271,7 +275,7 @@ class Editprofile extends Component {
           <input type="submit" value="Submit" />
         </form>
         <p>{this.state.success}</p>
-        <Link to="/"> Back to Home </Link>
+
         <Footer />
       </div>
     );

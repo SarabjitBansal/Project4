@@ -8,6 +8,7 @@ class User < ApplicationRecord
   validates_format_of :email, :with => /@/, message: "Please enter a valid email address"
   validates :password, confirmation: true
 
+  has_many :messages
 
 
   def self.from_token_payload payload
@@ -17,7 +18,8 @@ class User < ApplicationRecord
   def to_token_payload
     {
       sub: id,
-      email: email
+      email: email,
+      name: name
     }
   end
   geocoded_by :location
